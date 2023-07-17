@@ -11,7 +11,6 @@ steps:
     commands:
       - pip install -r requirements.txt
       - flake8
-      - redis-cli -h redis ping
       - python3 myapp.py
 
 services:
@@ -33,7 +32,6 @@ steps:
     commands:
       - pip install -r requirements.txt
       - flake8
-      - redis-cli -h redis ping
       - python3 myapp.py
 
 services:
