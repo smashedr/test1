@@ -21,7 +21,9 @@ services:
       CORE_PORT: 3003
       CORE_RETURN_HTTPS: false
       CORE_SECRET: H8Y9lSs48w3HwOgFfpaF0G
-      CORE_DATABASE_URL: postgres://postgres:5432:postgres@postgres/postgres
+      CORE_DATABASE_URL: postgres://postgres:postgres@postgres/postgres
+    depends_on:
+      - postgres
 
 steps:
   - name: test
@@ -32,8 +34,9 @@ steps:
       - apt update && apt install -y curl
 #      - apt update && apt install -y curl python3 python3-pip
 #      - python3 -V
-      - sleep 5
-      - curl -v http://zipline:3003/
+      - echo ${ZIPLINE_URL}
+      - sleep 10
+      - curl -v ${ZIPLINE_URL}
 
 #  - name: build
 #    image: python

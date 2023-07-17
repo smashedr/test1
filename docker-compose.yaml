@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  zipline:
+    image: ghcr.io/diced/zipline:latest
+    restart: unless-stopped
+    environment:
+      DEBUG: true
+      CORE_PORT: 3003
+      CORE_RETURN_HTTPS: false
+      CORE_SECRET: H8Y9lSs48w3HwOgFfpaF0G
+      CORE_DATABASE_URL: postgres://postgres:postgres@postgres/postgres
+    depends_on:
+      - postgres
