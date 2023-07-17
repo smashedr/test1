@@ -34,9 +34,10 @@ steps:
       - apt update && apt install -y curl
 #      - apt update && apt install -y curl python3 python3-pip
 #      - python3 -V
-      - echo ${ZIPLINE_URL}
+      - echo "ZIPLINE_URL: ${ZIPLINE_URL}"
       - sleep 10
-      - curl -v ${ZIPLINE_URL}
+      - curl -v http://zipline:3003/
+      - python3 zip-test.py
 
 #  - name: build
 #    image: python

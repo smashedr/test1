@@ -1,2 +1,4 @@
 flake8
+psycopg2
 redis
+requests
