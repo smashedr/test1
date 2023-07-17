@@ -29,10 +29,11 @@ steps:
     environment:
       ZIPLINE_URL: http://zipline:3003/
     commands:
-      - apt update && apt install -y curl python3 python3-pip
-      - python3 -V
+      - apt update && apt install -y curl
+#      - apt update && apt install -y curl python3 python3-pip
+#      - python3 -V
+      - sleep 5
       - curl -v http://zipline:3003/
-      - python3 zipline.py requirements.txt
 
 #  - name: build
 #    image: python
