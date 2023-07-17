@@ -1,10 +1,16 @@
+---
+load: "1"
 kind: pipeline
-name: test-on-amd64
+name: test-amd64
 
 platform:
   arch: amd64
 
-load: "1"
+services:
+  - name: redis
+    image: redis
+    detach: true
+
 steps:
   - name: test
     image: python
@@ -13,19 +19,19 @@ steps:
       - flake8
       - python3 myapp.py
 
-services:
-  - name: redis
-    image: redis
-    detach: true
-
 ---
+load: "2"
 kind: pipeline
-name: test-on-arm64
+name: test-arm64
 
 platform:
   arch: arm64
 
-load: "2"
+services:
+  - name: redis
+    image: redis
+    detach: true
+
 steps:
   - name: test
     image: python
@@ -33,8 +39,3 @@ steps:
       - pip install -r requirements.txt
       - flake8
       - python3 myapp.py
-
-services:
-  - name: redis
-    image: redis
-    detach: true
