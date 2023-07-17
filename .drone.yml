@@ -11,6 +11,7 @@ steps:
     commands:
       - pip install -r requirements.txt
       - flake8
+      - python3 myapp.py
 
 ---
 kind: pipeline
@@ -26,6 +27,7 @@ steps:
     commands:
       - pip install -r requirements.txt
       - flake8
+      - python3 myapp.py
 
 services:
   - name: redis
