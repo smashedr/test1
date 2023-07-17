@@ -1,6 +1,7 @@
 import psycopg2
+import requests
 
-data = {
+pg_data = {
     'host': 'postgres',
     'database': 'postgres',
     'user': 'postgres',
@@ -9,7 +10,12 @@ data = {
 
 query = 'SELECT "token" FROM public."User" WHERE id=1 ORDER BY id ASC;'
 
-with psycopg2.connect(**data) as conn:
+data = {"username": "administrator", "password": "password", "code": None}
+url = 'http://zipline:3003/api/auth/login'
+r = requests.post(url, json=data)
+print(r.status_code)
+# print(r.text)
+with psycopg2.connect(**pg_data) as conn:
     with conn.cursor() as cur:
 
         cur.execute(query)
