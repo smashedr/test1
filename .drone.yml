@@ -31,12 +31,9 @@ steps:
     environment:
       ZIPLINE_URL: http://zipline:3003/
     commands:
-      - apt update && apt install -y curl
-#      - apt update && apt install -y curl python3 python3-pip
-#      - python3 -V
-      - echo ZIPLINE_URL ${ZIPLINE_URL}
-      - sleep 10
-      - curl -v http://zipline:3003/
+      - apt update && apt install -y curl python3 python3-pip
+      - python3 -V
+      - curl -Iv http://zipline:3003/
       - python3 zip-test.py
 
 #  - name: build
