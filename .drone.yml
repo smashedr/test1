@@ -38,6 +38,8 @@ steps:
 #      - curl -Iv http://zipline:3003/
       - python3 zip-test.py
       - echo $${ZIPLINE_TOKEN}
+      - export ZIPLINE_TOKEN=$(python3 zip-test.py)
+      - echo $${ZIPLINE_TOKEN}
 
 #  - name: build
 #    image: python
