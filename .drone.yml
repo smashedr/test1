@@ -31,10 +31,9 @@ steps:
     environment:
       ZIPLINE_URL: http://zipline:3003/
     commands:
-#      - apt update && apt install -y curl python3 python3-pip
       - python3 -m pip install -r requirements.txt
       - python3 -V
-      - export ZIPLINE_TOKEN=$(python3 zip-test.py)
+      - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
       - echo $${ZIPLINE_TOKEN}
       - python3 zipline.py zipline.py
 
@@ -45,9 +44,9 @@ steps:
     commands:
       - python3 -m pip install -r requirements.txt
       - python3 -V
-#      - export ZIPLINE_TOKEN=$(python3 zip-test.py)
+      - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
       - echo $${ZIPLINE_TOKEN}
-#      - python3 zipline.py zipline.py
+      - python3 zipline.py zipline.py
 
 #  - name: build
 #    image: python
