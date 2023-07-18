@@ -3,6 +3,10 @@ load: "1"
 kind: pipeline
 name: test-amd64
 
+trigger:
+  event:
+    - push
+
 platform:
   arch: amd64
 
@@ -51,16 +55,6 @@ steps:
 
   - name: test-3.9
     image: python:3.9
-    depends_on:
-      - zipline
-    commands:
-      - python3 -m pip install -r requirements.txt
-      - python3 -m pip install -e .
-      - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
-      - zipline test/test.txt
-
-  - name: test-3.8
-    image: python:3.8
     depends_on:
       - zipline
     commands:
