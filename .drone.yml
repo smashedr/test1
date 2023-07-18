@@ -25,25 +25,31 @@ services:
     depends_on:
       - postgres
 
+
+environment:
+  ZIPLINE_URL: http://zipline:3003/
+
 steps:
   - name: test-3.10
     image: python:3.10
-    environment:
-      ZIPLINE_URL: http://zipline:3003/
+    depends_on:
+      - zipline
     commands:
       - python3 -m pip install -r requirements.txt
       - python3 -V
+      - echo $${ZIPLINE_URL}
       - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
       - echo $${ZIPLINE_TOKEN}
       - python3 zipline.py zipline.py
 
   - name: test-3.9
     image: python:3.9
-    environment:
-      ZIPLINE_URL: http://zipline:3003/
+    depends_on:
+      - zipline
     commands:
       - python3 -m pip install -r requirements.txt
       - python3 -V
+      - echo $${ZIPLINE_URL}
       - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
       - echo $${ZIPLINE_TOKEN}
       - python3 zipline.py zipline.py
