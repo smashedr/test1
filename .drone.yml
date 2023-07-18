@@ -1,66 +1,26 @@
----
-load: "1"
-kind: pipeline
-name: test-amd64
+local Pipeline(name, image) = {
+  kind: "pipeline",
+  name: name,
+  steps: [
+    {
+      name: "test",
+      image: image,
+      commands: [
+        "python -V"
+        "python myapp.py"
+      ]
+    }
+  ]
+};
+
+[
+  Pipeline("python-3-8", "python:3.8"),
+  Pipeline("python-3-9", "python:3.9"),
+]
 
 platform:
   arch: amd64
 
 services:
-  - name: postgres
-    image: postgres:15
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DATABASE: postgres
-
-  - name: zipline
-    image: ghcr.io/diced/zipline:latest
-    environment:
-      DEBUG: true
-      CORE_PORT: 3003
-      CORE_RETURN_HTTPS: false
-      CORE_SECRET: H8Y9lSs48w3HwOgFfpaF0G
-      CORE_DATABASE_URL: postgres://postgres:postgres@postgres/postgres
-    depends_on:
-      - postgres
-
-
-environment:
-  ZIPLINE_URL: http://zipline:3003/
-
-steps:
-  - name: test-3.10
-    image: python:3.10
-    depends_on:
-      - zipline
-    commands:
-      - python3 -m pip install -r requirements.txt
-      - python3 -V
-      - echo $${ZIPLINE_URL}
-      - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
-      - echo $${ZIPLINE_TOKEN}
-      - python3 zipline.py zipline.py
-
-  - name: test-3.9
-    image: python:3.9
-    depends_on:
-      - zipline
-    commands:
-      - python3 -m pip install -r requirements.txt
-      - python3 -V
-      - echo $${ZIPLINE_URL}
-      - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
-      - echo $${ZIPLINE_TOKEN}
-      - python3 zipline.py zipline.py
-
-#  - name: build
-#    image: python
-#    environment:
-#      ZIPLINE_URL: http://zipline:3003/
-#    commands:
-#      - python3 -V
-#      - python3 -m pip install -r requirements.txt
-#      - flake8
-#      - python3 -m build
-#      - python3 zipline.py requirements.txt
+  - name: redis
+    image: redis
