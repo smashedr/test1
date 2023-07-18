@@ -19,7 +19,7 @@ zip_data = {
 }
 
 # set zipline url
-zip_uri = os.environ.get('ZIPLINE_URL', 'http://zipline:3003').rstrip('/')
+zip_uri = os.environ.get('ZIPLINE_URL', 'http://zipline:3000').rstrip('/')
 zip_url = f'{zip_uri}/api/auth/login'
 
 # log in to create account (and get cookie)

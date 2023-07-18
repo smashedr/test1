@@ -7,7 +7,7 @@ platform:
   arch: amd64
 
 environment:
-  ZIPLINE_URL: http://zipline:3000/
+  ZIPLINE_URL: http://zipline:3003/
 
 services:
   - name: postgres
@@ -21,7 +21,7 @@ services:
     image: ghcr.io/diced/zipline:latest
     environment:
       DEBUG: true
-      CORE_PORT: 3000
+      CORE_PORT: 3003
       CORE_RETURN_HTTPS: false
       CORE_SECRET: H8Y9lSs48w3HwOgFfpaF0G
       CORE_DATABASE_URL: postgres://postgres:postgres@postgres/postgres
@@ -29,25 +29,23 @@ services:
       - postgres
 
 steps:
-  - name: test-3.11
-    image: python:3.11
-    depends_on:
-      - zipline
-    commands:
-      - python3 -m pip install -r requirements.txt
-      - python3 -m pip install -e .
-      - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
-      - zipline test/test.txt
-
   - name: test-3.10
     image: python:3.10
     depends_on:
       - zipline
     commands:
       - python3 -m pip install -r requirements.txt
-      - python3 -m pip install -e .
       - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
-      - zipline test/test.txt
+      - python3 zipline.py zipline.py
+
+  - name: test-3.11
+    image: python:3.11
+    depends_on:
+      - zipline
+    commands:
+      - python3 -m pip install -r requirements.txt
+      - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
+      - python3 zipline.py zipline.py
 
   - name: test-3.9
     image: python:3.9
@@ -55,9 +53,8 @@ steps:
       - zipline
     commands:
       - python3 -m pip install -r requirements.txt
-      - python3 -m pip install -e .
       - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
-      - zipline test/test.txt
+      - python3 zipline.py zipline.py
 
   - name: test-3.8
     image: python:3.8
@@ -65,6 +62,16 @@ steps:
       - zipline
     commands:
       - python3 -m pip install -r requirements.txt
-      - python3 -m pip install -e .
       - export ZIPLINE_TOKEN=$(python3 test/get_token.py)
-      - zipline test/test.txt
+      - python3 zipline.py zipline.py
+
+#  - name: build
+#    image: python
+#    environment:
+#      ZIPLINE_URL: http://zipline:3003/
+#    commands:
+#      - python3 -V
+#      - python3 -m pip install -r requirements.txt
+#      - flake8
+#      - python3 -m build
+#      - python3 zipline.py requirements.txt
