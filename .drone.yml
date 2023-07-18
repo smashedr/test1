@@ -17,10 +17,3 @@ local Pipeline(name, image) = {
   Pipeline("python-3-8", "python:3.8"),
   Pipeline("python-3-9", "python:3.9"),
 ]
-
-platform:
-  arch: amd64
-
-services:
-  - name: redis
-    image: redis
