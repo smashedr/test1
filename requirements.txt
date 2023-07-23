@@ -1,7 +1,2 @@
-build
 flake8
-psycopg2
-python-decouple
-python-dotenv
 redis
-requests
